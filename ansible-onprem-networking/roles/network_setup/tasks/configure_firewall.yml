@@ -1,1 +1,9 @@
 # Setup firewall rules (iptables, nftables)
+- name: Configure firewall rules
+  ansible.builtin.template:
+    src: firewall.rules.j2
+    dest: /etc/firewall.rules
+  notify: Reload firewall
+
+- name: Apply firewall rules
+  ansible.builtin.command: iptables-restore < /etc/firewall.rules
