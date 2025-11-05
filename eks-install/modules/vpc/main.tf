@@ -1,6 +1,7 @@
 # Creating VPC
 resource "aws_vpc" "main" {
-  cidr_block           = var.vpc_cidr
+  # IP address range of the VPC (tcp/ip implimentation)
+  cidr_block           = var.vpc_cidr 
   enable_dns_hostnames = true
   enable_dns_support   = true
   # In AWS, tags are used in cost optimization / identifying stale resources. 
@@ -15,6 +16,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "private" {
   count             = length(var.private_subnet_cidrs)
   vpc_id            = aws_vpc.main.id
+  # Private subnet IP Range (tcp/ip implimentation)
   cidr_block        = var.private_subnet_cidrs[count.index]
   availability_zone = var.availability_zones[count.index]
 
@@ -29,6 +31,7 @@ resource "aws_subnet" "private" {
 resource "aws_subnet" "public" {
   count             = length(var.public_subnet_cidrs)
   vpc_id            = aws_vpc.main.id
+  # Public subnet IP Range (tcp/ip implimentation)
   cidr_block        = var.public_subnet_cidrs[count.index]
   availability_zone = var.availability_zones[count.index]
   # This require enabling to get public_ip for ec2 instance under public subnet
@@ -76,6 +79,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
   route {
+    # Default route to internet from public subnet (tcp/ip implimentation)
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.main.id
   }
@@ -91,6 +95,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
   route {
+    # Default route to internet from private subnet (tcp/ip implimentation)
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.main[count.index].id
   }
