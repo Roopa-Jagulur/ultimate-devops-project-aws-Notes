@@ -16,4 +16,38 @@
 
 This framework provides idempotent, repeatable network setup for on-prem physical or virtual infrastructure using Ansible automation, supporting complex networking scenarios with TCP/IP, DNS, VPC-like subnetting, security with firewalls, and secure VPN connectivity. It enhances network configuration reliability, ease of management, and fast rollout of changes.
 
+**To create the on-premises infrastructure using the Ansible code framework provided earlier, follow these command steps:**
 
+1. Ensure Ansible is installed
+
+   **$ansible --version**
+
+2. Prepare your Ansible inventory and variables
+
+   -Inventory file (inventories/hosts.ini) should list your target hosts.
+   -Variables defined in group_vars/all.yml must reflect your infrastructure network settings.
+
+3. Run the Ansible playbook
+
+   Navigate to the directory with playbook.yml, then execute:
+
+   **$ansible-playbook -i inventories/hosts.ini playbook.yml**
+
+4. Verify tasks completion
+
+   Watch for any errors in output; Ansible run will configure TCP/IP, DNS, firewall, and VPN settings on target hosts.
+
+5. Optional: Run ad-hoc commands to check connectivity
+
+   **$ansible -i inventories/hosts.ini all -m ping**
+   
+   **$ansible -i inventories/hosts.ini all -a "ip addr show"**
+   
+   **$ansible -i inventories/hosts.ini all -a "iptables -L"**
+   
+This will deploy the configurations idempotently, setting up your on-premises servers with the desired networking components efficiently.
+   
+   
+   
+
+   
