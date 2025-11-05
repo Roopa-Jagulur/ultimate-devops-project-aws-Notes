@@ -1,1 +1,7 @@
 # Tasks to configure IP addresses, netmask, gateway
+- name: Configure TCP/IP on server
+  ansible.builtin.template:
+    src: interface.conf.j2
+    dest: /etc/network/interfaces.d/eth0.cfg
+  notify: Restart networking
+
