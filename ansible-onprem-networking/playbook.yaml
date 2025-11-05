@@ -1,1 +1,10 @@
 # Main playbook gluing tasks and roles
+- hosts: servers
+  become: true
+  roles:
+    - role: network_setup
+      tasks_from: configure_tcpip.yml
+    - role: network_setup
+      tasks_from: configure_firewall.yml
+    - role: network_setup
+      tasks_from: configure_vpn.yml
