@@ -1,1 +1,11 @@
 # Firewall rules template
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+{% for rule in firewall_rules %}
+-A INPUT -p {{ rule.proto }} --dport {{ rule.port }} -j {{ rule.action | upper }}
+{% endfor %}
+
+COMMIT
