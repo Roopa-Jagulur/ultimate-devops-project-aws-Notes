@@ -1,1 +1,14 @@
  # Handlers to restart network, firewall, vpn services
+- name: Restart networking
+  ansible.builtin.service:
+    name: networking
+    state: restarted
+
+- name: Reload firewall
+  ansible.builtin.command:
+    cmd: iptables-restore < /etc/firewall.rules
+
+- name: Restart VPN
+  ansible.builtin.service:
+    name: openvpn
+    state: restarted
